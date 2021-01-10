@@ -50,7 +50,7 @@ sleep 1 && echo -ne "\033[5A\033[K\r"
 if [ $h -gt 0 ] && [ $m -eq 0 ]
 then
   h=$((h-1))
-  m=59
+  m=60
 fi
 
 if [ $h -gt 0 ] || [ $m -gt 0 ]

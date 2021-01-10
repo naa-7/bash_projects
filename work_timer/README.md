@@ -5,13 +5,15 @@
 
 The idea of this project is to build a terminal based work timer. The program uses zenity to ask a user for required time to start counting down. 
 
-The user can enter hours and minutes, hours without minutes, or minutes without hours since it accepts hours and minutes. There are two ways to
+The user can enter hours and minutes, hours without minutes, or minutes without hours since it accepts hours and minutes. There are two 
 
-start the timer. First, the program will run the current terminal window and when the program ends, the output will be removes. Second, the 
+ways to start the timer. First, the program will run the current terminal window and when the program ends, the output will be removes. 
 
-program will run in a new window of a set size (20x10) to save screen space for other tasks and once program ends the timer terminal window will
+Second, the program will run in a new window of a set size (20x10) to save screen space for other tasks and once program ends the timer 
 
-close. In both ways, Once the timer stops, a 2 second alert will start and a notification pop up window will apear to notify user of the end of program.
+terminal window will close. In both ways, Once the timer stops, a 2 second alert will start and a notification pop up window will apear 
+
+to notify user of the end of program.
 
 
 ## There are two ways to run the program
@@ -29,6 +31,7 @@ close. In both ways, Once the timer stops, a 2 second alert will start and a not
    3) Run the program:
  
      $ ./work_timer 
+
 
 Second, The program will run in a new window which will close after the program ends:
    
@@ -51,19 +54,19 @@ Second, The program will run in a new window which will close after the program 
 
  modify the of program's directory in `launcher.sh` and then copy it to `/usr/local/bin/`
 
-    1) Change Directory to `work_timer`. Example:
+  1) Change Directory to `work_timer`. Example:
 
       $ cd github/work_timer/
 
-    2) Make the program & launcher executable:
+  2) Make the program & launcher executable:
 
       $ chmod +x work_timer launcher.sh
 
-    3) open `launcher.sh` file with any program of choice. Example, I am using `nano`:
+  3) open `launcher.sh` file with any program of choice. Example, I am using `nano`:
      
      $ nano launcher.sh
 
-    4) Modify `launcher.sh` file:
+  4) Modify `launcher.sh` file:
 
      - Comment out `DIR=$(zenity --file-selection)`
      
@@ -75,7 +78,7 @@ Second, The program will run in a new window which will close after the program 
        
         DIR="/home/naa-7/github/work_timer/"
 
-    5) Save the modified file and copy it to `/usr/local/bin`. Optional, `launcher.sh` can be renamed before copying it:
+  5) Save the modified file and copy it to `/usr/local/bin`. Optional, `launcher.sh` can be renamed before copying it:
 
      - copying the file without renaming:
 	
@@ -87,7 +90,7 @@ Second, The program will run in a new window which will close after the program 
 
        $ sudo cp timer /usr/local/bin/
 
-    6) Now the progam can be run from anywhere in the terminal, just open a terminal and run:
+  6) Now the progam can be run from anywhere in the terminal, just open a terminal and run:
 
       $ laucher.sh   # if it was not renamed
 

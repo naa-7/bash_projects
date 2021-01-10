@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e "\033[37;44;1;82m####################\033[0m"
+echo -e "\033[37;44;1;82m####################\033[0m" 
 echo -e "\033[37;44;1;82m###  Work Timer  ###\033[0m"
 echo -e "\033[37;44;1;82m####################\033[0m"
 echo -e "\033[37;44;1;82m#\033[0m                  \033[37;44;1;82m#\033[0m"
@@ -115,7 +115,7 @@ echo -e "\033[37;44;1;82m####################\033[0m"
 echo -e "\033[37;44;1;82m###  Time is up  ###\033[0m"
 echo -e "\033[37;44;1;82m####################\033[0m"
 
-zenity --notification --text="Work Time Finished"
+zenity --notification --text="Work Time Finished" && aplay alarm.wav >/dev/null 2>&1
 zenity --warning --title="Work Timer" --icon-name="notification" --ellipsize --text="Work Time Finished"
 
 sleep 1

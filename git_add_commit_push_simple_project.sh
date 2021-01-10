@@ -21,9 +21,9 @@ sleep 1 && echo -ne "\033[A\033[2K\r\033[A\033[2K\r"
 # pushing to repository
 if (git push >/dev/null 2>&1) ;
 then
-	echo "--- Successful ---"
+	echo -e "\033[30;48;5;82m--- Successful ---\033[0m"
 	sleep 1 && echo -ne "\033[A\033[2K\r\033[A\033[2K\r"
 else
-	echo "--- Failed ---"
+	echo -e "\033[37;44;1;82m--- Failed ---\033[0m"
 	sleep 1 && echo -ne "\033[A\033[2K\r"
 fi

@@ -56,21 +56,21 @@ Second, The program will run in a new window which will close after the program 
 
   1) Change Directory to `work_timer`. Example:
 
-      $ cd github/work_timer/
+    $ cd github/work_timer/
 
   2) Make the program & launcher executable:
 
-      $ chmod +x work_timer launcher.sh
+    $ chmod +x work_timer launcher.sh
 
   3) open `launcher.sh` file with any program of choice. Example, I am using `nano`:
      
-     $ nano launcher.sh
+    $ nano launcher.sh
 
   4) Modify `launcher.sh` file:
 
-     - Comment out `DIR=$(zenity --file-selection)`
+    - Comment out `DIR=$(zenity --file-selection)`
      
-     - Add the path to the program directory to `DIR`
+    - Add the path to the program directory to `DIR`
      
         DIR="(Enter path to directory of program here)"
 
@@ -80,11 +80,11 @@ Second, The program will run in a new window which will close after the program 
 
   5) Save the modified file and copy it to `/usr/local/bin`. Optional, `launcher.sh` can be renamed before copying it:
 
-     - copying the file without renaming:
+    - copying the file without renaming:
 	
        $ sudo cp launcher.sh /usr/bin/local/
 
-     - renaming and copying the file:
+    - renaming and copying the file:
 
        $ mv laucher.sh timer
 
@@ -92,8 +92,8 @@ Second, The program will run in a new window which will close after the program 
 
   6) Now the progam can be run from anywhere in the terminal, just open a terminal and run:
 
-      $ laucher.sh   # if it was not renamed
+    $ laucher.sh   # if it was not renamed
 
-      $ timer        # if it was renamed
+    $ timer        # if it was renamed
 
     

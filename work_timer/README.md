@@ -1,7 +1,7 @@
 # work_timer
 
-![work_timer](https://github.com/naa-7/bash_projects/blob/main/work_timer/timer_1.gif)
-![work_timer](https://github.com/naa-7/bash_projects/blob/main/work_timer/timer_2.gif)
+![work_timer1](https://github.com/naa-7/bash_projects/blob/main/work_timer/timer_1.gif)
+![work_timer2](https://github.com/naa-7/bash_projects/blob/main/work_timer/timer_2.gif)
 
 The idea of this project is to build a terminal based work timer. The program uses zenity to ask a user for required time to start counting down. 
 

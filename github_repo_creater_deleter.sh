@@ -132,7 +132,7 @@ then
 			echo "Created successfully"
 			sleep 1 && echo -ne "\033[A\033[2K\r"
 		fi
-		echo -n "Do you want to create READme.md? (Y/n): "
+		echo -n "Do you want to create README.md? (Y/n): "
 		read option
 		echo -ne "\033[A\033[2K\r\033[A\033[2K\r"
 		if [[ $option == 'Y' || $option == 'y' ]]
@@ -187,7 +187,7 @@ then
 			echo "Created successfully"
 			sleep 1 && echo -ne "\033[A\033[2K\r"
 		fi
-		echo -n "Do you want to create READme.md? (Y/n): "
+		echo -n "Do you want to create README.md? (Y/n): "
 		read option
 		echo -ne "\033[A\033[2K\r\033[A\033[2K\r"
 		if [[ $option == 'Y' || $option == 'y' ]]

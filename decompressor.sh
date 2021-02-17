@@ -18,8 +18,8 @@ fi
 while [[ $flag == 0 ]]
 do
 
-  inp=$(file $input)
-  out="$(echo $inp | sed 's/,.*//' | sed 's/.*: //' | sed 's/\s.*//')"
+  type=$(file $input)
+  out="$(echo $type | sed 's/,.*//' | sed 's/.*: //' | sed 's/\s.*//')"
 
   if [[ $out == "gzip" ]]
   then

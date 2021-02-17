@@ -7,6 +7,7 @@ ls -p | grep -v /
 echo "===================================="
 echo -n "Do you want to extract a file?(Y/n): "
 read choice
+
 if [[ $choice == 'Y' ]] || [[ $choice == 'y' ]]
 then
 
@@ -80,6 +81,7 @@ then
    done
 
    mv * ../ && cd ../ && rm -rf $directory
+   
    echo "==========================="
    echo "Number times of extraction:"
    echo "--------------------------"
@@ -89,6 +91,7 @@ then
    echo "zip:   $zipCounter"
    echo "==========================="
    echo "Extracted file: $input"
+   
    sleep 4 && clear
 
 else

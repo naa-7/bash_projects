@@ -17,7 +17,7 @@ then
    zipCounter=0
 
    echo -n "Enter file to extract: "
-   read input
+   read input && clear
    directory=temp
 
    if [ -d $directory ]

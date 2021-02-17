@@ -1,8 +1,8 @@
 #!/bin/bash
 
 count=$(grep "processor*" /proc/cpuinfo | wc --lines)
-counter=60
-for second in {1..60}
+counter=120
+for second in {1..120}
 do
 echo -ne "Waiting time: $counter\033[K\r"
 counter=$((counter-1))

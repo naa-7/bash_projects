@@ -3,7 +3,8 @@
 echo "===================================="
 echo "Files List:"
 echo "-----------"
-ls -p | grep -v /
+#ls -p | grep -v /
+file * | grep 'gzip\|bzip\|Zip\|POSIX' | sed 's/:.*//'
 echo "===================================="
 echo -n "Do you want to extract a file?(Y/n): "
 read choice
@@ -79,9 +80,19 @@ then
      fi
 
    done
-
    mv * ../ && cd ../ && rm -rf $directory
-   
+
+   echo -n "Do you want to rename extracted file?(Y/n): "
+   read answer
+
+   if [[ $answer == 'Y' ]] || [[ $answer == 'y' ]]
+   then
+       echo -n "Enter new name: "
+       read newName
+       mv $input $newName
+       input=$newName
+   fi
+
    echo "==========================="
    echo "Number times of extraction:"
    echo "--------------------------"
@@ -91,7 +102,7 @@ then
    echo "zip:   $zipCounter"
    echo "==========================="
    echo "Extracted file: $input"
-   
+
    sleep 4 && clear
 
 else

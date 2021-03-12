@@ -1,10 +1,9 @@
 #!/bin/bash
 
-echo "###################################################"
-echo "######### Github Repo Creater and Deleter #########"
-echo "###################################################"
-sleep 1 && echo -ne "\033[A\033[2K\r\033[A\033[2K\r\033[A\033[2K\r"
-echo "--- Repo Create | Delete ---"
+clear
+echo "#######################################################"
+echo "#########   Github Repo Creater and Deleter   #########"
+echo "#######################################################"
 
 # checking if hub is installed and installing it if not and making the repository
 if ! (dpkg -s hub >/dev/null 2>&1) && ! (rpm -q hub >/dev/null 2>&1) && ! (yum list installed hub >/dev/null 2>&1) && ! (dnf list installed hub >/dev/null 2>&1) && ! (which hub >/dev/null 2>&1) ;
@@ -41,31 +40,41 @@ then
 fi
 
 # Creating or deleteing github repo
-echo -n "Do you want to create or delete a repository? (C/d): "
+echo -n "Do you want to create or delete a repository? (C/d/[q]uit): "
 read input
-echo -ne "\033[A\033[2K\r"
+
+if [[ $input == 'Q' || $input == 'q' ]]
+then
+	clear && echo "--- Program Exit ---" && sleep 1 && echo -ne "\033[A\033[2K\r" && exit 0
+else
+	echo -ne "\033[A\033[2K\r"
+fi
 
 if [[ $input == 'C' || $input = 'c' ]]
 then 
 
 	# Enter the type of repository before building 
-	echo -n "Do you want to create a PUBLIC or PRIVATE repository? (P/pr): "
+	echo -n "Do you want to create a PUBLIC or PRIVATE repository? (P/pr/[q]uit): "
 	read repository
-	echo -ne "\033[A\033[2K\r"
-
+	if [[ $repository == 'Q' || $repository == 'q' ]]
+	then
+		clear && echo "--- Program Exit ---" && sleep 1 && echo -ne "\033[A\033[2K\r" && exit 0
+	else
+		echo -ne "\033[A\033[2K\r"
+	fi
 	# Enter the name of the repository to name both the local folder and github repository
 	echo -n "Enter the name of repository: "
 	read name
 	echo -ne "\033[A\033[2K\r"
 	# Enter the Directory where the folder and github repository will be
-	echo "==========================================================================="
+	echo "======================================================="
 	echo "Directory list:"
 	echo "---------------"
-	sleep 1 && echo -ne "\033[A\033[2K\r\033[A\033[2K\r" 
-	cd && ls -d */
-	echo "==========================================================================="
+	cd && ls --color -d */
+	echo "======================================================="
 	echo -n "Enter name of DIRECTORY where repo should be (leave empty to keep in current dir): "
 	read DIRECTORY
+	clear
 	counter=5
 	while [ $counter -ge 0 ]
 	do
@@ -242,9 +251,14 @@ then
 
 elif [ $input == 'D' ] || [ $input == 'd' ]
 then
-	echo -n "Enter name of repository to delete: "
+	echo -n "Enter name of repository to delete, [q]uit: "
 	read delRepo
-	echo -ne "\033[A\033[2K\r"
+	if [[ $delRepo == 'Q' || $delRepo == 'q' ]]
+	then
+		echo "Program Exit!" && sleep 1 && echo -ne "\033[A\033[2K\r" && exit 0
+	else
+		echo -ne "\033[A\033[2K\r"
+	fi
 	echo "==========================================================================="
 	echo "Directory list:"
 	echo "---------------"

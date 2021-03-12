@@ -27,6 +27,7 @@ do
 		#git stash apply // if git stash pop doesn't work, then git stash apply works the same way
 		if (git stash >/dev/null 2>&1) && (git pull >/dev/null 2>&1) && (git stash pop >/dev/null 2>&1) && (git stash drop >/dev/null 2>&1)
 		then
+			git status -s -b -unormal && sleep 1.5 && echo -ne "\033[A\033[2K\r"
 			echo -e "\033[30;48;5;82m--- Successful ---\033[0m"
 			sleep 1.5 && echo -ne "\033[A\033[2K\r"
 			break
@@ -40,6 +41,7 @@ do
 	then
 		if (git fetch >/dev/null 2>&1) && (git reset --hard HEAD >/dev/null 2>&1) && (git merge >/dev/null 2>&1)
 		then
+			git status -s -b -unormal && sleep 1.5 && echo -ne "\033[A\033[2K\r"
 			echo -e "\033[30;48;5;82m--- Successful ---\033[0m"
 			sleep 1.5 && echo -ne "\033[A\033[2K\r"
 			break
@@ -70,6 +72,7 @@ do
 		# pushing to repository
 		if (git push >/dev/null 2>&1) ;
 		then
+			git status -s -b -unormal && sleep 1.5 && echo -ne "\033[A\033[2K\r"
 			echo -e "\033[30;48;5;82m--- Successful ---\033[0m"
 			sleep 1.5 && echo -ne "\033[A\033[2K\r"
 			break
@@ -83,6 +86,7 @@ do
 	then
 		if (git pull --no-edit >/dev/null 2>&1)
 		then
+			git status -s -b -unormal && sleep 1.5 && echo -ne "\033[A\033[2K\r"
 			echo -e "\033[30;48;5;82m--- Successful ---\033[0m"
 			sleep 1.5 && echo -ne "\033[A\033[2K\r"
 			break

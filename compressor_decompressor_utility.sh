@@ -5,11 +5,100 @@ gzipCounter=0
 bzip2Counter=0
 tarCounter=0
 zipCounter=0
-flag=0
 
-# same meaning but different syntax for defining a function
+function main {	
+	
+	clear
+	echo "========================================================="
+	echo "---------------- [De]/Compressor Utility ----------------"
+	echo "========================================================="
+	echo -n "Do you want to [D]ecompress or [C]ompress a file?(D/c): "
+	read choice
+
+	if [[ $choice == 'D' || $choice == 'd' ]]
+	then
+		decompressor
+		echo "----- Finished Decompressing -----" && sleep 1.5 
+
+	elif [[ $choice == 'C' || $choice == 'c' ]]
+	then
+		compressor
+		echo "----- Finished Compressing -----" && sleep 1.5 
+	else
+		echo "Error, Program Exit!"
+		exit 1
+	fi
+
+	clear && echo -n "Do you want to rename extracted file?(Y/n): "
+	read answer
+	if [[ $answer == 'Y' ]] || [[ $answer == 'y' ]]
+	then
+		echo -n "Enter new name: "
+		read newName
+		mv $input $newName
+		input=$newName
+	fi
+
+	mv * ../ && cd ../ && rm -rf $directory && clear
+	
+	totalCounter=$((gzipCounter+bzip2Counter+tarCounter+zipCounter))
+	
+	# Bash can't handle floats. You need to use bc instead
+	# scale=2 -> two decimal precision. 1000000000 -> Nanosecond (10^9)
+	totalTime=$(bc <<< "scale=0;($time2-$time1)/1000000000")
+
+	# It is better to use (( ... )) when comparing numbers
+	if (( $(bc <<< "$totalTime >= 60.00") ))
+	then
+		totalTime1=$(bc <<< "scale=2;$totalTime/60")
+		totalTime2=$(bc <<< "scale=0;$totalTime/60")
+		totalTime3=$(bc <<< "60*($totalTime1-$totalTime2)")
+		totalTime3=${totalTime3%.*}
+		TIME="${totalTime2}.${totalTime3} minutes"
+	else
+		TIME="${totalTime} seconds"
+	fi
+
+	echo "================================="
+	echo "             SUMMARY             "
+	echo "================================="
+	
+	if [[ $choice == 'D' || $choice == 'd' ]]
+	then
+		echo "Number & Time of Decompressions:"
+	else
+		echo "Number & Time of Compressions:"
+	fi
+
+	echo "---------------------------------"
+	echo "bzip2: $bzip2Counter"
+	echo "gzip:  $gzipCounter"
+	echo "tar:   $tarCounter"
+	echo "zip:   $zipCounter"
+	echo "---------------------------------"
+	
+	if [[ $choice == 'D' || $choice == 'd' ]]
+	then
+		echo "Total decompressions: $totalCounter"
+	else
+		echo "Total compressions: $totalCounter"
+	fi
+
+	echo "---------------------------------"
+	echo "Time spent: $TIME"
+	echo "---------------------------------"
+	echo "File name: $input"
+	echo "================================="
+	echo "         END OF PROGRAM          "
+	echo "================================="
+
+}
+
+
+# they have same meaning but different syntax for defining a function
 #compressor() {
 function compressor {
+
 	while [[ true ]]
 	do
 		clear
@@ -42,7 +131,7 @@ function compressor {
 	while [[ true ]]
 	do
 		echo -e "Compression type:\n[1] gzip  -  [2] bzip2  -  [3] tar  - [4] zip  - [5] random"
-		echo -n "Enter compression type number: "
+		echo -n "Enter compression type number or [q]uit: "
 		read compression_type
 			
 		if [[ $compression_type -ge 1 && $compression_type -le 5 ]]
@@ -61,7 +150,7 @@ function compressor {
 		fi
 	done
 
-	echo -n "Enter nubmer of times to compress: "
+	echo -n "Enter nubmer of times to compress or [q]uit: "
 	read counter
 	
 	if [[ $counter == 'Q' || $counter == 'q' ]]
@@ -85,11 +174,17 @@ function compressor {
 
 	name="$input"
 	clear
+	
+	# %H -> Hour, %M -> Minute, %S -> Second, %N -> convert time to Nanoseconds
+	time1=$(date +%H%M%S%N)
 
 	#for i in $(eval echo "{1..$flag}") // this for loop works the same and the latter
 	for i in $(seq 1 $counter)
 	do
-		echo -ne "Compressing...\033[K\r" && sleep 0.1
+		echo -ne "Please, wait! Compressing /\033[A\r" && sleep 0.05
+		echo -ne "Please, wait! Compressing -\033[A\r" && sleep 0.05
+		echo -ne "Please, wait! Compressing \\033[A\r" && sleep 0.05
+		echo -ne "Please, wait! Compressing |\033[A\r" && sleep 0.05
 		if [[ $compression_type == 5 ]]
 		then
 			type="$(shuf -i 1-4 -n 1)"
@@ -129,17 +224,22 @@ function compressor {
 		fi
 		
 		input=$name
-
 	done
+	
+	time2=$(date +%H%M%S%N)
+
 }
 
+
 decompressor() {
+
 	while [[ true ]]
 	do
 		clear
 		echo "===================================="
 		echo "-----------  FILES LIST  -----------"
 		echo "===================================="
+
 		#ls -p | grep -v /
 		if ! [[ $(file * | grep 'gzip\|bzip\|Zip\|POSIX' | sed 's/:.*//') ]]
 		then
@@ -147,6 +247,7 @@ decompressor() {
 		else
 			file * | grep 'gzip\|bzip\|Zip\|POSIX' | sed 's/:.*//'
 		fi
+
 		echo "===================================="
 		echo "-------   ENTER [q] TO EXIT  -------"
 		echo "===================================="
@@ -167,21 +268,24 @@ decompressor() {
 		fi
 	done
 
-
 	if [ -d $directory ]
 	then
 		cp $input $directory/ && cd $directory/
 
 	else
 		mkdir $directory && cp $input $directory/ && cd $directory/
-
 	fi
 	
 	name="$input"
-
-	while [[ $flag == 0 ]]
+	time1=$(date +%H%M%S%N)
+	
+	while [[ true ]]
 	do
-		echo -ne "Decompressing...\033[K\r" && sleep 0.1
+		echo -ne "Please, wait! Decompressing /\033[A\r" && sleep 0.05
+		echo -ne "Please, wait! Decompressing -\033[A\r" && sleep 0.05
+		echo -ne "Please, wait! Decompressing \\033[A\r" && sleep 0.05
+		echo -ne "Please, wait! Decompressing |\033[A\r" && sleep 0.05
+
 		type=$(file $input)
 		out="$(echo $type | sed 's/,.*//' | sed 's/.*: //' | sed 's/\s.*//')"
 
@@ -216,59 +320,18 @@ decompressor() {
 			zipCounter=$((zipCounter+1))
 
 		else
-			flag=1
-
+			break
 		fi
 	done
-	
+
+	time2=$(date +%H%M%S%N)
+
 	mv $input $name 2>/dev/null
 	input=$name
+
 }
-	
-clear
-echo "=========================================="
-echo "------- [De]/Compressorion Utility -------"
-echo "=========================================="
-echo -n "Do you want to [D]ecompress or [C]ompress a file?(D/c): "
-read choice
 
-if [[ $choice == 'D' || $choice == 'd' ]]
-then
-	decompressor
-elif [[ $choice == 'C' || $choice == 'c' ]]
-then
-	compressor
-fi
-
-
-echo -n "Do you want to rename extracted file?(Y/n): "
-read answer
-if [[ $answer == 'Y' ]] || [[ $answer == 'y' ]]
-then
-	echo -n "Enter new name: "
-	read newName
-	mv $input $newName
-	input=$newName
-fi
-
-mv * ../ && cd ../ && rm -rf $directory
-
-clear
-echo "================================="
-echo "            SUMMARY              "
-echo "================================="
-echo "Number times of de/compression:"
-echo "---------------------------------"
-echo "bzip2: $bzip2Counter"
-echo "gzip:  $gzipCounter"
-echo "tar:   $tarCounter"
-echo "zip:   $zipCounter"
-echo "---------------------------------"
-echo "File name: $input"
-echo "================================="
-
-
-
+main
 
 
 

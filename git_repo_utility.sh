@@ -65,7 +65,7 @@ do
 		git add . >/dev/null 2>&1
 
 		# commiting changes
-		git commit -m $comment >/dev/null 2>&1
+		git commit -m "$comment" >/dev/null 2>&1
 
 		# pushing to repository
 		if (git push >/dev/null 2>&1) ;

@@ -31,7 +31,7 @@ do
 		#then
 			echo -n "Enter a comment to commit changes: "
 			read comment
-			echo -ne "\033[A\033[2K\r"
+			clear
 
 		#else
 		#	comment='$(zenity --title="Git Repository" --entry --text="Enter a comment to commit changes:")'

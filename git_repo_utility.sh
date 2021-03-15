@@ -3,19 +3,19 @@
 while [[ true ]]
 do
 
-	echo "============================================================"
+	echo "========================================================="
 	echo "                     Git Repo Utility                       "
-	echo "============================================================"
+	echo "========================================================="
 	echo  "Options:"
-	echo "------------------------------------------------------------"
-	echo -e "[1] Push changes	[2] Pull w\o affecting local files"
-	echo -e "[3] Pull changes	[4] Remove all local changes"
-	echo -e "[5] Files status	[6] Show changes since last commit"
-	echo -e "[7] Simple log		[8] Detailed log"
-	echo -e "[9] Restore file	[10] Quit"
-	echo "------------------------------------------------------------"
+	echo "---------------------------------------------------------"
+	echo -e "[1] Push changes    [2] Pull w\o affecting local files"
+	echo -e "[3] Pull changes    [4] Remove all local changes"
+	echo -e "[5] Files status    [6] Show changes since last commit"
+	echo -e "[7] Simple log	    [8] Detailed log"
+	echo -e "[9] Restore file    [10] Quit"
+	echo "---------------------------------------------------------"
 	echo "Enter Option Nubmer: "
-	echo "============================================================"
+	echo "========================================================="
 	echo -ne "\033[2A\033[K\rEnter Option Number: "
 	read input && echo ""
 
@@ -26,33 +26,40 @@ do
 
 	if [[ $input == 1 ]]
 	then
-			git status -s -b -unormal
+		git status -s -b -unormal
 		#if ! (dpkg -s zenity >/dev/null 2>&1) && ! (rpm -q zenity >/dev/null 2>&1) && ! (yum list installed zenity >/dev/null 2>&1) && ! (dnf list installed zenity >/dev/null 2>&1) && ! (which zenity >/dev/null 2>&1) ;
 		#then
-			echo -n "Enter a comment to commit changes: "
-			read comment
-			clear
+		echo "----------------------------------------------"
+		echo -n "Enter a comment to commit changes or [R]eturn: "
+		read comment
+		clear
 
-		#else
-		#	comment='$(zenity --title="Git Repository" --entry --text="Enter a comment to commit changes:")'
-		#fi
-
-		# adding files
-		git add . >/dev/null 2>&1
-
-		# commiting changes
-		git commit -m "$comment" >/dev/null 2>&1
-
-		# pushing to repository
-		if (git push >/dev/null 2>&1) ;
+		if [[ $comment != 'R' && $comment != 'r' ]]
 		then
-			git status -s -b -unormal && sleep 1.5 && echo -ne "\033[A\033[2K\r"
-			echo -e "\033[30;48;5;82m--- Successful ---\033[0m"
-			sleep 1.5 && echo -ne "\033[A\033[2K\r"
 
+			#else
+			#	comment='$(zenity --title="Git Repository" --entry --text="Enter a comment to commit changes:")'
+			#fi
+
+			# adding files
+			git add . >/dev/null 2>&1
+
+			# commiting changes
+			git commit -m "$comment" >/dev/null 2>&1
+
+			# pushing to repository
+			if (git push >/dev/null 2>&1) ;
+			then
+				git status -s -b -unormal && sleep 1.5 && echo -ne "\033[A\033[2K\r"
+				echo -e "\033[30;48;5;82m--- Successful ---\033[0m"
+				sleep 1.5 && echo -ne "\033[A\033[2K\r"
+
+			else
+				echo -e "\033[30;41;5;82m--- Failed ---\033[0m"
+				sleep 1.5 && echo -ne "\033[A\033[2K\r"
+			fi
 		else
-			echo -e "\033[30;41;5;82m--- Failed ---\033[0m"
-			sleep 1.5 && echo -ne "\033[A\033[2K\r"
+			continue
 		fi
 
 	elif [[ $input == 2 ]]
@@ -99,9 +106,8 @@ do
 
 	elif [[ $input == 5 ]]
 	then
-		if (git status -s -b -unormal)
+		if (git status -s -b -unormal | less --quiet)
 		then
-			sleep 2
 			clear
 		else
 			echo -e "\033[30;41;5;82m--- Failed ---\033[0m"
@@ -141,23 +147,30 @@ do
 
 	elif [[ $input == 9 ]]
 	then
-		echo "=========================================="
-		echo "                Files List                "
-		echo "=========================================="
+		echo "========================================================="
+		echo "                       Files List                       "
+		echo "========================================================="
 		ls --color -p | grep -v /
-		echo "=========================================="
-		echo -n "Enter file name to restore: "
-		read name
+		echo "========================================================="
+		echo "Enter name of file to restore or [R]eturn: "
+		echo "========================================================="
+		echo -ne "\033[2A\033[K\rEnter name of file to restore or [R]eturn: "
+		read name and echo ""
 		clear
-
-		if (git restore $name >/dev/null 2>&1)
+		
+		if [[ $name != 'R' && $name != 'r' ]]
 		then
-			echo -e "\033[30;48;5;82m--- Successful ---\033[0m"
-			sleep 1.5 && echo -ne "\033[A\033[2K\r"
-			break
+			if (git restore $name >/dev/null 2>&1)
+			then
+				echo -e "\033[30;48;5;82m--- Successful ---\033[0m"
+				sleep 1.5 && echo -ne "\033[A\033[2K\r"
+				break
+			else
+				echo -e "\033[30;41;5;82m--- Failed ---\033[0m"
+				sleep 1.5 && echo -ne "\033[A\033[2K\r"
+			fi
 		else
-			echo -e "\033[30;41;5;82m--- Failed ---\033[0m"
-			sleep 1.5 && echo -ne "\033[A\033[2K\r"
+			continue
 		fi
 
 	elif [[ $input == 10 || $input == 'Q' || $input == 'q' ]]

@@ -8,8 +8,8 @@ do
 	echo "============================================================"
 	echo  "Options:"
 	echo "------------------------------------------------------------"
-	echo -e "\n[1] Pull without changing local - [2] Remove local changes"
-	echo -e "[3] Push changes - [4] Pull changes - [5] Quit\n"
+	echo -e "\n[1] Push changes\n[2] Pull changes"
+	echo -e "[3] Pull without changing local\n[4] Remove local changes\n[5] Quit\n"
 	echo "------------------------------------------------------------"
 	echo "Enter Option Nubmer: "
 	echo "============================================================"
@@ -22,36 +22,6 @@ do
 	done
 
 	if [[ $input == 1 ]]
-	then
-		# git pull is basically git fetch && git merge 
-		#git stash apply // if git stash pop doesn't work, then git stash apply works the same way
-		if (git stash >/dev/null 2>&1) && (git pull >/dev/null 2>&1) && (git stash pop >/dev/null 2>&1) && (git stash drop >/dev/null 2>&1)
-		then
-			git status -s -b -unormal && sleep 1.5 && echo -ne "\033[A\033[2K\r"
-			echo -e "\033[30;48;5;82m--- Successful ---\033[0m"
-			sleep 1.5 && echo -ne "\033[A\033[2K\r"
-			break
-
-		else
-			echo -e "\033[30;41;5;82m--- Failed ---\033[0m"
-			sleep 1.5 && echo -ne "\033[A\033[2K\r"
-		fi
-
-	elif [[ $input == 2 ]]
-	then
-		if (git fetch >/dev/null 2>&1) && (git reset --hard HEAD >/dev/null 2>&1) && (git merge >/dev/null 2>&1)
-		then
-			git status -s -b -unormal && sleep 1.5 && echo -ne "\033[A\033[2K\r"
-			echo -e "\033[30;48;5;82m--- Successful ---\033[0m"
-			sleep 1.5 && echo -ne "\033[A\033[2K\r"
-			break
-
-		else
-			echo -e "\033[30;41;5;82m--- Failed ---\033[0m"
-			sleep 1.5 && echo -ne "\033[A\033[2K\r"
-		fi
-
-	elif [[ $input == 3 ]]
 	then
 		#if ! (dpkg -s zenity >/dev/null 2>&1) && ! (rpm -q zenity >/dev/null 2>&1) && ! (yum list installed zenity >/dev/null 2>&1) && ! (dnf list installed zenity >/dev/null 2>&1) && ! (which zenity >/dev/null 2>&1) ;
 		#then
@@ -82,9 +52,39 @@ do
 			sleep 1.5 && echo -ne "\033[A\033[2K\r"
 		fi
 
-	elif [[ $input == 4 ]]
+	elif [[ $input == 2 ]]
 	then
 		if (git pull --no-edit >/dev/null 2>&1)
+		then
+			git status -s -b -unormal && sleep 1.5 && echo -ne "\033[A\033[2K\r"
+			echo -e "\033[30;48;5;82m--- Successful ---\033[0m"
+			sleep 1.5 && echo -ne "\033[A\033[2K\r"
+			break
+
+		else
+			echo -e "\033[30;41;5;82m--- Failed ---\033[0m"
+			sleep 1.5 && echo -ne "\033[A\033[2K\r"
+		fi
+
+	elif [[ $input == 3 ]]
+	then
+		# git pull is basically git fetch && git merge 
+		#git stash apply // if git stash pop doesn't work, then git stash apply works the same way
+		if (git stash >/dev/null 2>&1) && (git pull >/dev/null 2>&1) && (git stash pop >/dev/null 2>&1) && (git stash drop >/dev/null 2>&1)
+		then
+			git status -s -b -unormal && sleep 1.5 && echo -ne "\033[A\033[2K\r"
+			echo -e "\033[30;48;5;82m--- Successful ---\033[0m"
+			sleep 1.5 && echo -ne "\033[A\033[2K\r"
+			break
+
+		else
+			echo -e "\033[30;41;5;82m--- Failed ---\033[0m"
+			sleep 1.5 && echo -ne "\033[A\033[2K\r"
+		fi
+
+	elif [[ $input == 4 ]]
+	then
+		if (git fetch >/dev/null 2>&1) && (git reset --hard HEAD >/dev/null 2>&1) && (git merge >/dev/null 2>&1)
 		then
 			git status -s -b -unormal && sleep 1.5 && echo -ne "\033[A\033[2K\r"
 			echo -e "\033[30;48;5;82m--- Successful ---\033[0m"

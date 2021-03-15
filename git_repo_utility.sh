@@ -141,9 +141,14 @@ do
 
 	elif [[ $input == 9 ]]
 	then
+		echo "=========================================="
+		echo "                Files List                "
+		echo "=========================================="
+		ls --color -p | grep -v /
+		echo "=========================================="
 		echo -n "Enter file name to restore: "
 		read name
-		echo -ne "\033[A\033[2K\r"
+		clear
 
 		if (git restore $name >/dev/null 2>&1)
 		then

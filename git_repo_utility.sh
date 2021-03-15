@@ -26,6 +26,7 @@ do
 
 	if [[ $input == 1 ]]
 	then
+			git status -s -b -unormal
 		#if ! (dpkg -s zenity >/dev/null 2>&1) && ! (rpm -q zenity >/dev/null 2>&1) && ! (yum list installed zenity >/dev/null 2>&1) && ! (dnf list installed zenity >/dev/null 2>&1) && ! (which zenity >/dev/null 2>&1) ;
 		#then
 			echo -n "Enter a comment to commit changes: "
@@ -111,6 +112,10 @@ do
 	then
 		if (git diff)
 		then
+			if (git diff == "")
+			then
+				echo "Repo is up to date"
+			fi
 			clear
 		else
 			echo -e "\033[30;41;5;82m--- Failed ---\033[0m"

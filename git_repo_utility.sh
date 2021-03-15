@@ -8,8 +8,9 @@ do
 	echo "============================================================"
 	echo  "Options:"
 	echo "------------------------------------------------------------"
-	echo -e "[1] Push changes\n[2] Pull changes"
-	echo -e "[3] Pull without changing local\n[4] Remove local changes\n[5] Quit"
+	echo -e "[1] Push changes	[2] Pull changes	[3] Pull w\o affecting local files"
+	echo -e "[4] Restore file	[5] Files status	[6] Remove all local changes"
+	echo -e "[7] Simple log		[8] Detailed log	[9] Quit"
 	echo "------------------------------------------------------------"
 	echo "Enter Option Nubmer: "
 	echo "============================================================"
@@ -81,8 +82,26 @@ do
 			echo -e "\033[30;41;5;82m--- Failed ---\033[0m"
 			sleep 1.5 && echo -ne "\033[A\033[2K\r"
 		fi
-
+	
 	elif [[ $input == 4 ]]
+	then
+		echo -n "Enter file name to restore: "
+		read name
+		echo -ne "\033[A\033[2K\r"
+		
+		if (git restore $name >/dev/null 2>&1)
+		then
+			echo -e "\033[30;48;5;82m--- Successful ---\033[0m"
+			sleep 1.5 && echo -ne "\033[A\033[2K\r"
+			break
+		fi
+
+	elif [[ $input == 5 ]]
+	then
+		git status -s -b -unormal && sleep 2
+		clear
+
+	elif [[ $input == 6 ]]
 	then
 		if (git fetch >/dev/null 2>&1) && (git reset --hard HEAD >/dev/null 2>&1) && (git merge >/dev/null 2>&1)
 		then
@@ -96,7 +115,17 @@ do
 			sleep 1.5 && echo -ne "\033[A\033[2K\r"
 		fi
 
-	elif [[ $input == 5 || $input == 'Q' || $input == 'q' ]]
+	elif [[ $input == 7 ]]
+	then
+		git log
+		clear
+
+	elif [[ $input == 8 ]]
+	then
+		git log -p
+		clear
+
+	elif [[ $input == 9 || $input == 'Q' || $input == 'q' ]]
 	then
 		echo -e "\033[30;48;5;82m--- Program Exit ---\033[0m" && sleep 1.5 && echo -ne "\033[A\033[2K\r" && break
 

@@ -16,7 +16,7 @@ do
 	echo -ne "\033[2A\033[K\rEnter Option Number: "
 	read input && echo ""
 
-	for i in {1..15}
+	for i in {1..13}
 	do	
 		echo -ne "\033[A\033[K\r"
 	done

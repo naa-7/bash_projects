@@ -106,7 +106,7 @@ do
 
 	elif [[ $input == 5 ]]
 	then
-		if (git status -s -b -unormal | less --quiet)
+		if (git status -s -b -unormal | less --quiet -R)
 		then
 			clear
 		else
@@ -116,13 +116,15 @@ do
 
 	elif [[ $input == 6 ]]
 	then
-		if (git diff)
+		if (git diff --color | less -R)
 		then
+
 			if (git diff == "")
 			then
-				echo "Repo is up to date"
+				echo "--- Repo is up to date ---" && sleep 1.5
 			fi
 			clear
+
 		else
 			echo -e "\033[30;41;5;82m--- Failed ---\033[0m"
 			sleep 1.5 && echo -ne "\033[A\033[2K\r"

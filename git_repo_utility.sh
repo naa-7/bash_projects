@@ -142,10 +142,11 @@ do
 	
 	elif [[ $input == 8 ]]
 	then
-		if !(git log -p)
+		if (git log -p)
 		then
 			clear
 		fi
+
 
 	elif [[ $input == 9 ]]
 	then
